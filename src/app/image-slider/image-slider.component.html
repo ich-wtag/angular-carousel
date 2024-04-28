@@ -1,0 +1,39 @@
+<div class="slider">
+  <div class="slider__wrapper">
+    <div class="slider__arrow-left">
+      <img
+        src="../../assets/icons/left-arrow.svg"
+        alt="left-arrow"
+        (click)="goToPreviousSlide()"
+      />
+    </div>
+    <div class="slider__arrow-right">
+      <img
+        src="../../assets/icons/right-arrow.svg"
+        alt="right-arrow"
+        (click)="goToNextSlide()"
+      />
+    </div>
+
+    <div class="slider__item" *ngFor="let slide of imageSource; let i = index">
+      <img
+        *ngIf="i === currentImageIndex"
+        class="slider__item__image"
+        [src]="slide.url"
+        [alt]="slide.title"
+        @slideInOut
+      />
+    </div>
+    <!-- <div class="slider__item">
+      <ng-container *ngFor="let slide of imageSource; let i = index">
+        <img
+          class="slider__item__image"
+          *ngIf="i === currentImageIndex"
+          [src]="slide.url"
+          [alt]="slide.title"
+          @slideInOut
+        />
+      </ng-container>
+    </div> -->
+  </div>
+</div>
