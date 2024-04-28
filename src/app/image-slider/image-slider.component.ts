@@ -5,50 +5,100 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component } from '@angular/core';
+import { AfterContentInit, Component, Input, OnInit } from '@angular/core';
+
+const animationCarousel = [
+  state('outright', style({ transform: `translateX(100%)` })),
+  state('outleft', style({ transform: `translateX(-100%)` })),
+  transition('void=>inleft', [style({ transform: `translateX(0)` })]),
+  transition('void=>outleft', [style({ transform: `translateX(-100%)` })]),
+
+  transition('*=>inright', [
+    style({ transform: `translateX(-100%)` }),
+    animate('260ms ease-in', style({ transform: `translateX(0)` })),
+  ]),
+  transition('*=>inleft', [
+    style({ transform: `translateX(100%)` }),
+    animate('260ms ease-in', style({ transform: `translateX(0)` })),
+  ]),
+  transition('*=>outleft', [
+    animate('260ms ease-in', style({ transform: `translateX(-100%)` })),
+  ]),
+  transition('*=>outright', [
+    animate('260ms ease-in', style({ transform: `translateX(100%)` })),
+  ]),
+];
 
 @Component({
   selector: 'app-image-slider',
   templateUrl: './image-slider.component.html',
   styleUrls: ['./image-slider.component.scss'],
   animations: [
-    trigger('slideInOut', [
-      transition('void => *', [
-        style({ opacity: 0 }),
-        animate('500ms', style({ opacity: 1 })),
-      ]),
-      transition('* => void', [animate('500ms', style({ opacity: 0 }))]),
-    ]),
+    trigger('slideInOut', animationCarousel),
+    // trigger('slideInOut', [
+    //   transition('void => *', [
+    //     style({ opacity: 0 }),
+    //     animate('500ms', style({ opacity: 1 })),
+    //   ]),
+    //   transition('* => void', [animate('500ms', style({ opacity: 0 }))]),
+    // ]),
   ],
 })
-export class ImageSliderComponent {
+export class ImageSliderComponent implements OnInit, AfterContentInit {
   currentImageIndex: number = 0;
+  slideControl!: any[];
 
-  imageSource = [
-    { url: '../../assets/images/1.jpg', title: 'iamge 1' },
-    { url: '../../assets/images/2.jpg', title: 'iamge 3' },
-    { url: '../../assets/images/3.jpg', title: 'iamge 3' },
-    { url: '../../assets/images/4.jpg', title: 'iamge 4' },
-    { url: '../../assets/images/5.jpg', title: 'iamge 5' },
-  ];
+  @Input() imageSource!: any[];
 
-  getDesiredImage() {
-    return this.imageSource[this.currentImageIndex];
+  // getDesiredImage() {
+  //   return this.imageSource[this.currentImageIndex];
+  // }
+
+  // goToNextSlide() {
+  //   const lastIndex = this.imageSource.length - 1;
+  //   const newIndex = ++this.currentImageIndex;
+  //   this.currentImageIndex = newIndex > lastIndex ? 0 : newIndex;
+
+  //   this.getDesiredImage();
+  // }
+
+  // goToPreviousSlide() {
+  //   const lastIndex = this.imageSource.length - 1;
+  //   const newIndex = --this.currentImageIndex;
+  //   this.currentImageIndex = newIndex < 0 ? lastIndex : newIndex;
+
+  //   this.getDesiredImage();
+  // }
+  ngOnInit(): void {
+    this.slideControl = this.imageSource.map((x: any, index: number) =>
+      index ? 'outleft' : 'inleft'
+    );
+    console.log(this.slideControl);
   }
 
-  goToNextSlide() {
-    const lastIndex = this.imageSource.length - 1;
-    const newIndex = ++this.currentImageIndex;
-    this.currentImageIndex = newIndex > lastIndex ? 0 : newIndex;
-
-    this.getDesiredImage();
+  ngAfterContentInit(): void {
+    // this.slideControl = this.imageSource.map((x: any, index: number) =>
+    //   index ? 'outleft' : 'inleft'
+    // );
+    // console.log('after', this.slideControl, this.imageSource);
   }
 
-  goToPreviousSlide() {
-    const lastIndex = this.imageSource.length - 1;
-    const newIndex = --this.currentImageIndex;
-    this.currentImageIndex = newIndex < 0 ? lastIndex : newIndex;
+  change(direction: string) {
+    const incr = direction == 'right' ? -1 : +1;
+    const prev = this.currentImageIndex;
+    this.currentImageIndex =
+      (this.currentImageIndex + this.imageSource.length + incr) %
+      this.imageSource.length;
 
-    this.getDesiredImage();
+    this.onSlide(this.currentImageIndex, prev, direction);
+  }
+
+  onSlide(current: any, prev: any, direction: any) {
+    this.slideControl[current] = 'in' + direction;
+    this.slideControl[prev] = 'out' + direction;
+
+    console.log(this.slideControl);
+
+    // this.posThumbail(current);
   }
 }
