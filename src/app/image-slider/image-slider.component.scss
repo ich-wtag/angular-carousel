@@ -8,18 +8,9 @@
     height: 38rem;
     overflow: hidden;
     display: flex;
-
-    // &::after {
-    //   display: block;
-    //   clear: both;
-    //   content: "";
-    // }
   }
 
   &__arrow {
-    // height: 100%;
-    // width: 100%;
-
     &-left {
       cursor: pointer;
       background-color: white;

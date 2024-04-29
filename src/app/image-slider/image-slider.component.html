@@ -4,14 +4,14 @@
       <img
         src="../../assets/icons/left-arrow.svg"
         alt="left-arrow"
-        (click)="change('right')"
+        (click)="goToPreviousSlide()"
       />
     </div>
     <div class="slider__arrow-right">
       <img
         src="../../assets/icons/right-arrow.svg"
         alt="right-arrow"
-        (click)="change('left')"
+        (click)="goToNextSlide()"
       />
     </div>
     <div
@@ -21,25 +21,5 @@
     >
       <img class="slider__item__image" [src]="slide.url" [alt]="slide.title" />
     </div>
-    <!-- <div class="slider__item"> -->
-    <!-- [@animImageSlider]="slideControl[i]" -->
-    <!-- *ngFor="let slide of imageSource; let i = index" -->
-    <!-- *ngFor="let img of images; let i = index; let first = first" -->
-    <!-- *ngIf="i === currentImageIndex" -->
-
-    <!-- <img class="slider__item__image" [src]="slide.url" [alt]="slide.title" /> -->
-    <!-- @slideInOut -->
-    <!-- </div> -->
-    <!-- <div class="slider__item">
-      <ng-container *ngFor="let slide of imageSource; let i = index">
-        <img
-          class="slider__item__image"
-          *ngIf="i === currentImageIndex"
-          [src]="slide.url"
-          [alt]="slide.title"
-          @slideInOut
-        />
-      </ng-container>
-    </div> -->
   </div>
 </div>
