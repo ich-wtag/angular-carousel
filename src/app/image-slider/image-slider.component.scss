@@ -2,19 +2,19 @@
   margin-top: 4rem;
 
   &__wrapper {
+    display: flex;
+    height: 38rem;
     margin: 0 auto;
     max-width: 70rem;
-    position: relative;
-    height: 38rem;
     overflow: hidden;
-    display: flex;
+    position: relative;
   }
 
   &__arrow {
     &-left {
-      cursor: pointer;
       background-color: white;
       border-radius: 50%;
+      cursor: pointer;
       height: 3rem;
       left: 5%;
       position: absolute;
@@ -25,15 +25,15 @@
 
       img {
         height: 100%;
-        width: 100%;
         object-fit: cover;
+        width: 100%;
       }
     }
 
     &-right {
-      cursor: pointer;
       background-color: white;
       border-radius: 100%;
+      cursor: pointer;
       height: 3rem;
       position: absolute;
       right: 5%;
@@ -44,8 +44,18 @@
 
       img {
         height: 100%;
-        width: 100%;
         object-fit: cover;
+        width: 100%;
+      }
+    }
+
+    &-left,
+    &-right {
+      opacity: 0.6;
+      transition: opacity 0.26s ease-in;
+
+      &:hover {
+        opacity: 1;
       }
     }
   }

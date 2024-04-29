@@ -16,6 +16,7 @@ const animationCarousel = [
   transition('*=>inright', [
     style({ transform: 'translateX(-100%)' }),
     animate('300ms ease-in', style({ transform: 'translateX(0)' })),
+    animate('300ms 100ms ease-in', style({ opacity: 1 })),
   ]),
   transition('*=>inleft', [
     style({ transform: 'translateX(100%)' }),
